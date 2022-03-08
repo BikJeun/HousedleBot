@@ -1,0 +1,89 @@
+#tab_grid {
+  width: 670px;
+  height: 868px;
+  border: 5px solid #999;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 1px;
+  margin: auto;
+  margin-top: 20px;
+  background-color: #999;
+  box-shadow: 0px 0px 20px white;
+}
+
+.clks {
+  height: 289px;
+  width: 223px;
+  font-size: 0.1px;
+}
+
+#p11 {
+  background: url('assets/day4/11.jpg');
+}
+
+#p12 {
+  background: url('assets/day4/12.jpg');
+}
+
+#p13 {
+  background: url('assets/day4/13.jpg');
+}
+
+#p21 {
+  background: url('assets/day4/21.jpg');
+}
+
+#p22 {
+  background: url('assets/day4/22.jpg');
+}
+
+#p23 {
+  background: url('assets/day4/23.jpg');
+}
+
+#p31 {
+  background: url('assets/day4/31.jpg');
+}
+
+#p32 {
+  background: url('assets/day4/32.jpg');
+}
+
+#p33 {
+  background: url('assets/day4/33.jpg');
+}
+
+#launch {
+  width: 233px;
+  margin: auto;
+  margin-top: 20px;
+  height: 40px;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 10px;
+  color: black;
+  background-color: #ffd1dc;
+  cursor: pointer;
+  font-family: 'Arial';
+  font-size: 25px;
+}
+
+#launch:hover {
+  color: #ba003e;
+}
+
+#moves {
+  width: 233px;
+  margin: auto;
+  margin-top: 50px;
+  height: 40px;
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 10px;
+  color: #000;
+  background-color: #ffd1dc;
+  cursor: pointer;
+  font-family: 'Arial';
+  font-size: 25px;
+}
