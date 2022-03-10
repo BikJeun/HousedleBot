@@ -17,7 +17,7 @@ public class HousedleBot extends TelegramLongPollingBot {
         String command = update.getMessage().getText();
 
         if(command.equals("/start") ||command.equals("/register") ||command.equals("/play") ||
-                command.equals("/view") ||command.equals("/volunteer") ||command.equals("/donate")) {
+                command.equals("/view") ||command.equals("/vgit cholunteer") ||command.equals("/donate")) {
             currentState = null;
         }
 
