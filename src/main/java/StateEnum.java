@@ -5,5 +5,5 @@ public enum StateEnum {
     GALLERY,
     VOLUNTEER,
     DONATE;
-
 }
+
