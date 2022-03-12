@@ -4,8 +4,13 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.SendResponse;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
+import org.telegram.telegrambots.meta.api.methods.send.SendGame;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -31,23 +36,32 @@ public class HousedleBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         String command = update.getMessage().getText();
 
-        if(command.equals("/start") ||command.equals("/register") ||command.equals("/play") ||
+        if(command.equals("/start") ||command.equals("/play") ||
         command.equals("/view") ||command.equals("/volunteer") ||command.equals("/learn") ||command.equals("/donate")) {
                         currentState = null;
             }
+
+        if(update.hasCallbackQuery()) {
+            System.out.println(update.getCallbackQuery().getMessage().getFrom().getUserName());
+            AnswerCallbackQuery query = new AnswerCallbackQuery();
+            query.setCallbackQueryId(update.getCallbackQuery().getId());
+            query.setUrl("http://localhost:63342/Housedle/housedle-puzzle/puzzle.html?_ijt=88ijtdm21l5prmdkt7sbtvtone#");
+
+
+            try {
+                execute(query);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
 
 
             if(command.equals("/start") || currentState == StateEnum.INTRO) {
                 System.out.println("Running start");
                 introduction(update);
-            } else if (command.equals("/register") || currentState == StateEnum.CREATEACCOUNT) {
-                System.out.println("Create account");
-                // createAccount(update);
-            } else if (command.equals("/play")) {
+            } else if (command.equals("/play")|| currentState == StateEnum.PLAY || update.hasCallbackQuery()) {
                 System.out.println("play");
                 executePuzzle(update);
-            } else if (command.equals("/view")) {
-                viewAllPuzzles(update);
             } else if (command.equals("/volunteer")) {
                 System.out.println("/volunteer");
                 volunteer(update);
@@ -60,6 +74,7 @@ public class HousedleBot extends TelegramLongPollingBot {
             } else {
                 introduction(update);
             }
+
         }
 
         private void donate(Update update) {
@@ -91,10 +106,6 @@ public class HousedleBot extends TelegramLongPollingBot {
             }
         }
 
-        private void viewAllPuzzles(Update update) {
-            //TODO
-        }
-
         private void learn(Update update) {
             SendMessage response = new SendMessage();
             response.setChatId(update.getMessage().getChatId().toString());
@@ -110,107 +121,29 @@ public class HousedleBot extends TelegramLongPollingBot {
         }
 
         private void executePuzzle(Update update) {
-            SendMessage response = new SendMessage();
-            response.setChatId(update.getMessage().getChatId().toString());
-            String message = null;
-            message = "Housedle 23\n" +
-                    "You daily challenge is here!\n" +
-                    "www.sampleurl.com/index.html";
-            response.setText(message);
+            if(currentState != StateEnum.PLAY) {
+                currentState = StateEnum.PLAY;
+                System.out.println("play game");
+                try {
+                    execute(new SendGame(update.getMessage().getChatId().toString(), "housedle"));
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println(update.getCallbackQuery().getMessage().getFrom().getUserName());
+                AnswerCallbackQuery query = new AnswerCallbackQuery();
+                query.setCallbackQueryId(update.getCallbackQuery().getId());
+                query.setUrl("http://localhost:63342/Housedle/housedle-puzzle/puzzle.html?_ijt=88ijtdm21l5prmdkt7sbtvtone#");
 
-            try {
-                execute(response);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
+
+                try {
+                    execute(query);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
             }
-        }
 
-//    private void createAccount(Update update) {
-//        SendMessage response = new SendMessage();
-//        response.setChatId(update.getMessage().getChatId().toString());
-//
-//
-//        if(currentState != StateEnum.CREATEACCOUNT) {    //first time enter
-//            currentState = StateEnum.CREATEACCOUNT;
-//
-//            String message = "Welcome to Housedle.\n" +
-//                    "You do not exist in our system yet." +
-//                    "Lets create an account so you can track you progress!\n\n" +
-//                    "Create a username";
-//            response.setText(message);
-//
-//            try {
-//                execute(response);
-//            } catch (TelegramApiException e) {
-//                e.printStackTrace();
-//            }
-//
-//            String message2 = "Ensure that you key in the desired username on the first try.\n" +
-//                    "Ensure that there are no spaces in the username.\n\n" +
-//                    "Thank you and welcome to Housedle!";
-//            response.setText(message2);
-//
-//            try {
-//                execute(response);
-//            } catch (TelegramApiException e) {
-//                e.printStackTrace();
-//            }
-//        } else { //reading the user input to save username
-//            System.out.println("Receiving user input");
-//            final String[] message = {null};
-//            final String username = update.getMessage().getText();
-//
-//            UserEntity newAccount = new UserEntity(update.getMessage().getFrom().getFirstName(), update.getMessage().getFrom().getLastName(), username);
-//
-//            String uid = update.getMessage().getFrom().getId().toString();
-//           /* FirebaseOptions options = null;
-//            try {
-//                options = FirebaseOptions.builder()
-//                        .setCredentials(GoogleCredentials.getApplicationDefault())
-//                        .setDatabaseUrl("https://hackforgood.firebaseio.com/")
-//                        .build();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            FirebaseApp.initializeApp(options);*/
-//
-//
-//            //HELP ITS FAILING HERE!!
-//            // ERROR : java.lang.IllegalStateException: FirebaseApp with name [DEFAULT] doesn't exist.
-//            FirebaseDatabase db = FirebaseDatabase.getInstance();
-//            DatabaseReference ref = db.getReference(uid).child("Account");
-//            String key = ref.push().getKey();
-//            System.out.println("ok");
-//            Map<String, Object> childUpdate = new HashMap<String, Object>();
-//            childUpdate.put(key, newAccount.toFirebaseObject());
-//            ref.updateChildren(childUpdate, new DatabaseReference.CompletionListener() {
-//                public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-//                    if (databaseError == null) {
-//                        System.out.println("Saved in db");
-//                        message[0] = "Welcome to Housedle!\n\n" +
-//                                "Did you know that nearly 1.6 billion people around the world do not have a place that they can call home? Along with the pandemic, this has caused more people to lose the opportunity to live in decent buildings.\n\n" +
-//                                "Join us as we explore how we can do our part to create decent home environments for everyone, both within and beyond the home.\n\n" +
-//                                "To join our daily challenges /play \n" +
-//                                "Be a volunteer /volunteer \n" +
-//                                "Make a donation /donate \n" +
-//                                "Find out more about Habitat for Humanity /learn \n";
-//
-//                    } else {
-//                        message[0] = "There seems to be an error. Do contact the creators to report this error.\n" +
-//                                "Sorry for the inconvenience caused";
-//                    }
-//                }});
-//                    response.setText(message[0]);
-//
-//                    try {
-//                        execute(response);
-//                    } catch (TelegramApiException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//        }
+        }
 
 
         private void introduction(Update update) {
