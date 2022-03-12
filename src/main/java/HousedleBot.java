@@ -16,8 +16,6 @@ import java.util.Map;
 public class HousedleBot extends TelegramLongPollingBot {
     StateEnum currentState = null;
 
-    StateEnum currentState = null;
-
 
 
     public String getBotUsername() {

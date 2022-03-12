@@ -10,21 +10,31 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const auth =  firebase.auth();
+const auth = firebase.auth();
 
 function register() {
   var email = document.getElementById("email");
   var password = document.getElementById("password");
   auth.createUserWithEmailAndPassword(email.value, password.value)
-  .then(() => alert("You are now registered!"))
-  .catch((e) => {
-    alert(e.message)
-  });
+    .then(() => alert("You are now registered!"))
+    .catch((e) => {
+      alert(e.message)
+    });
 }
 
 function login() {
   var email = document.getElementById("email");
-  var password  = document.getElementById("password");
-  const promise = auth.signInWithEmailAndPassword(email.value, password.value);
-  promise.catch(e => alert(e.message));  
+  var password = document.getElementById("password");
+  const promise = auth.signInWithEmailAndPassword(email.value, password.value)
+    .then((userCreddential) => {
+      const user = userCreddential.user;
+      console.log(user);
+      alert("Welcome " + user);
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorCode + errorMessage);
+    });;
+
 }
