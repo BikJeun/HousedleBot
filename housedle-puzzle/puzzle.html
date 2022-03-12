@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Puzzle</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div class="flex-parent jc-center">
+      <a href="#" id="button">Sign in to save your scores!</a>
+    </div>
+    <br/>
+    <div class="flex-parent jc-center">
+      <div id="moves">Moves: 0</div>
+      <div id="launch" onclick="start_game()">Start Game</div>
+    </div>
+    <div id="tab_grid">
+      <div class="block" id="p11" onclick="switching('p11');">11</div>
+      <div class="block" id="p12" onclick="switching('p12');">12</div>
+      <div class="block" id="p13" onclick="switching('p13');">13</div>
+      <div class="block" id="p21" onclick="switching('p21');">21</div>
+      <div class="block" id="p22" onclick="switching('p22');">22</div>
+      <div class="block" id="p23" onclick="switching('p23');">23</div>
+      <div class="block" id="p31" onclick="switching('p31');">31</div>
+      <div class="block" id="p32" onclick="switching('p32');">32</div>
+      <div class="block" id="p33" onclick="switching('p33');">33</div>
+    </div>
+    
+    <script type="text/javascript" src="gameimpl.js"></script>
+    
+    <!-- <div class="container">
+      <button id="bttn">Share</button>
+    </div>
+    <div class="overlay"></div>
+    <div class="share">
+      <h2>Share now</h2>
+      <script async src="https://telegram.org/js/telegram-widget.js?16" data-telegram-share-url="https://core.telegram.org/widgets/share"></script>
+    </div> -->
+
+    <div class="bg-modal">
+      <div class="modal-contents">
+        <div class="close">+</div>
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+        <script src="form.js"></script>
+        <div class="formContainer">
+          <h2>Sign in and play with your friends!</h2>
+          <p>Do not have an account? Sign up for one now!</p>
+          <input type="email" placeholder="Email" id="email">
+          <input type="password" placeholder="Password" id="password">
+          <button class="button" onclick="register()" id="register">Register</button>
+          <button class="button" onclick="login()" id="login">Login</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("button").addEventListener("click", () => {
+	      document.querySelector(".bg-modal").style.display = "flex";
+      });
+      document.querySelector(".close").addEventListener("click", () => {
+	      document.querySelector(".bg-modal").style.display = "none";
+      });
+    </script>
+
+    <script>
+      const shareButton = document.querySelector("button");
+      const overlay = document.querySelector(".overlay");
+      const shareModal = document.querySelector(".share");
+
+      const title = window.document.title;
+      const url = window.document.location.href;
+
+      shareButton.addEventListener("click", () => {
+        if (navigator.share) {
+          navigator.share({
+            title: `${title}`,
+            url: `${url}`
+          }).then(() => {
+            console.log("Thanks for sharing!");
+          })
+          .catch(console.error);
+        } else {
+          overlay.classList.add("show-share");
+          shareModal.classList.add("show-share");
+        }
+      })
+      overlay.addEventListener("click", () => {
+        overlay.classList.remove("show-share");
+        shareModal.classList.remove("show-share");
+      })
+    </script>
+  </body>
+</html>
