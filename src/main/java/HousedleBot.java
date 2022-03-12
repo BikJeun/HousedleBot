@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HousedleBot extends TelegramLongPollingBot {
+    StateEnum currentState = null;
 
     StateEnum currentState = null;
 
@@ -35,7 +36,9 @@ public class HousedleBot extends TelegramLongPollingBot {
         String command = update.getMessage().getText();
 
         if(command.equals("/start") ||command.equals("/register") ||command.equals("/play") ||
+
                 command.equals("/view") ||command.equals("/volunteer") ||command.equals("/donate")) {
+
             currentState = null;
         }
 
