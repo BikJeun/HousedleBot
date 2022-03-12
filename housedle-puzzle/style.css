@@ -12,7 +12,7 @@
   box-shadow: 0px 0px 20px white;
 }
 
-.clks {
+.block {
   height: 289px;
   width: 223px;
   font-size: 0.1px;
@@ -54,36 +54,152 @@
   background: url('assets/day4/33.jpg');
 }
 
-#launch {
+.flex-parent {
+  display: flex;
+}
+
+.jc-center {
+  justify-content: center;
+}
+
+#launch, #moves {
   width: 233px;
-  margin: auto;
-  margin-top: 20px;
+  margin: 20px;
   height: 40px;
-  border-radius: 5px;
   text-align: center;
   padding-top: 10px;
   color: black;
+  border: 2px solid black;
+	border-radius: 10px;
   background-color: #ffd1dc;
   cursor: pointer;
-  font-family: 'Arial';
+  font-family: 'Nunito';
   font-size: 25px;
+  display: inline-block;
 }
 
 #launch:hover {
   color: #ba003e;
 }
 
-#moves {
-  width: 233px;
+#btn {
+  width: 100px;
   margin: auto;
-  margin-top: 50px;
+  border: none;
+  border-radius: 2px;
+  margin-top: 10px;
   height: 40px;
-  border-radius: 5px;
   text-align: center;
-  padding-top: 10px;
-  color: #000;
+  color: #ba003e;
   background-color: #ffd1dc;
   cursor: pointer;
-  font-family: 'Arial';
-  font-size: 25px;
+  font-family: 'Nunito';
+  font-size: 15px;
+}
+
+.overlay {
+  opacity: 1;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 130vh;
+  background: rgba(0, 0, 0, .5);
+}
+
+.share {
+  position: absolute;
+  text-align: center;
+  left: 0;
+  right: 0;
+  top: 30%;
+  margin: auto;
+  width: 20%;
+  z-index: 1;
+  padding: 1em;
+  padding-top: 0px;
+  background: white;
+}
+
+.share, .overlay {
+  display: none;
+}
+
+.show-share {
+  display: block;
+}
+
+#button {
+	border: 2px solid black;
+	border-radius: 10px;
+	text-decoration: none;
+  text-align: center;
+	padding: 10px 20px;
+	color: black;
+  width: 10%;
+  justify-content: center;  
+  align-items: center;  
+}
+
+.button {
+	border: 2px solid black;
+	border-radius: 10px;
+	text-decoration: none;
+  text-align: center;
+	padding: 10px 20px;
+  margin: 10px;
+	color: black;
+  justify-content: center;  
+  align-items: center;  
+}
+
+.bg-modal {
+	background-color: rgba(0, 0, 0, 0.8);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.modal-contents {
+	height: 250px;
+	width: 500px;
+	background-color: white;
+	text-align: center;
+	padding: 20px;
+	position: relative;
+	border-radius: 4px;
+}
+
+input {
+	margin: 15px auto;
+	display: block;
+	width: 50%;
+	padding: 8px;
+	border: 1px solid gray;
+}
+
+.close {
+	position: absolute;
+	top: 0;
+	right: 10px;
+	font-size: 42px;
+	color: #333;
+	transform: rotate(45deg);
+	cursor: pointer;
+}
+
+#bttn {
+  background-color: #d1eeff;
+	border: 2px solid white;
+	border-radius: 30px;
+	text-decoration: none;
+	padding: 10px 28px;
+	color: black;
+	margin-top: 10px;
+	display: inline-block;
 }
