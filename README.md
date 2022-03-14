@@ -27,7 +27,7 @@ Call To Action, where users can click on the other links to find out more and co
 
 ## Technology used
 1. Telegram API in java
-2. Firebase: https://console.firebase.google.com/u/0/project/hackforgood-911b0/
+2. Firebase
 3. HTML/CSS/JS
 
 ## Demo
